@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Transaction Management App
 
-## Getting Started
+This is a full-stack application built with **Next.js** and **MongoDB** for managing transactions. It allows users to create, read, update, and delete transactions.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Create a Transaction**: Add a new transaction with amount, date, and description.
+- **Read Transactions**: Fetch and display all transactions sorted by date.
+- **Update a Transaction**: Edit an existing transaction.
+- **Delete a Transaction**: Remove a transaction from the list.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Technologies Used
 
-## Learn More
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB (with Mongoose for schema modeling)
+- **State Management**: React hooks (useState, useEffect)
+- **Styling**: Tailwind CSS
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The backend provides the following RESTful API endpoints:
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#
+### 1. **Create a Transaction**
+- **Method**: `POST`
+- **URL**: `/api/transactions`
+- **Request Body**:
+  ```json
+  {
+    "amount": 100,
+    "date": "2023-10-01",
+    "description": "Groceries"
+  }
+- **Response**:
+  ```json
+  {
+    "_id": "650f1c8e8b1f8e1a2c3b4d5e",
+    "amount": 100,
+    "date": "2023-10-01T00:00:00.000Z",
+    "description": "Groceries",
+    "__v": 0
+  }
+  
+#
+### 2. **Fetch All Transactions**
+- **Method**: `GETT`
+- **URL**: `/api/transactions`
+- **Response**:
+  ```json
+  [
+    {
+      "_id": "650f1c8e8b1f8e1a2c3b4d5e",
+      "amount": 100,
+      "date": "2023-10-01T00:00:00.000Z",
+      "description": "Groceries",
+      "__v": 0
+    }
+  ]
+ 
+ #
+ ### 3. **Update a Transaction**
+- **Method**: `PUT`
+- **URL**: `/api/transactions`
+- **Request Body**:
+  ```json
+  {
+    "_id": "650f1c8e8b1f8e1a2c3b4d5e",
+    "amount": 150,
+    "date": "2023-10-01",
+    "description": "Updated Groceries"
+  }
+- **Response Body**:
+  ```json
+  {
+    "_id": "650f1c8e8b1f8e1a2c3b4d5e",
+    "amount": 150,
+    "date": "2023-10-01T00:00:00.000Z",
+    "description": "Updated Groceries",
+    "__v": 0
+  }
+#
+### 4. **Delete a Transaction**
+- **Method**: `DELETE`
+- **URL**: `/api/transactions`
+- **Request Body**:
+  ```json
+  {
+    "id": "650f1c8e8b1f8e1a2c3b4d5e""
+  }
+- **Response Body**:
+  ```json
+  {
+    "message": "Transaction deleted"
+  }
+  
+---
+## Acknowledgments
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Mongoose Documentation](https://mongoosejs.com/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
