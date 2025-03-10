@@ -16,8 +16,11 @@ export async function POST(request: Request) {
     await transaction.save();
 
     return NextResponse.json(transaction, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Server error: ' + error?.message }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Server error: ' + error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Server error: An unknown error occurred' }, { status: 500 });
   }
 }
 
@@ -27,8 +30,11 @@ export async function GET() {
     await connect();
     const transactions = await Transaction.find().sort({ date: -1 });
     return NextResponse.json(transactions, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Server error: ' + error?.message }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Server error: ' + error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Server error: An unknown error occurred' }, { status: 500 });
   }
 }
 
@@ -53,8 +59,11 @@ export async function PUT(request: Request) {
     }
 
     return NextResponse.json(updatedTransaction, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Server error: ' + error?.message }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Server error: ' + error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Server error: An unknown error occurred' }, { status: 500 });
   }
 }
 
@@ -70,7 +79,10 @@ export async function DELETE(request: Request) {
 
     await Transaction.findByIdAndDelete(id);
     return NextResponse.json({ message: 'Transaction deleted' }, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Server error: ' + error?.message }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: 'Server error: ' + error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Server error: An unknown error occurred' }, { status: 500 });
   }
 }

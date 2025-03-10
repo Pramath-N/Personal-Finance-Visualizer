@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 
+type MongooseConnection = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
@@ -7,10 +11,14 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable.');
 }
 
-let cached = (global as any).mongoose;
+let cached: MongooseConnection = (global as typeof globalThis & {
+  mongoose: MongooseConnection;
+}).mongoose;
 
 if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+  cached = (global as typeof globalThis & {
+    mongoose: MongooseConnection;
+  }).mongoose = { conn: null, promise: null };
 }
 
 async function connect() {
