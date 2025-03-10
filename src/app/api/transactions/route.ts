@@ -27,6 +27,7 @@ export async function POST(request: Request) {
 // GET: Fetch all transactions
 export async function GET() {
   try {
+    console.log("HI");
     await connect();
     const transactions = await Transaction.find().sort({ date: -1 });
     return NextResponse.json(transactions, { status: 200 });
