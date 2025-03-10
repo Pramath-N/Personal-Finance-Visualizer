@@ -1,0 +1,35 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "app/api/**/*.ts",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "app/api/$1",
+        "headers": {
+          "Cache-Control": "public, max-age=3600, s-maxage=3600"
+        }
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/",
+        "headers": {
+          "Cache-Control": "public, max-age=3600, s-maxage=3600"
+        }
+      }
+    ],
+    "functions": {
+      "app/api/**/*.ts": {
+        "memory": 1024, 
+        "maxDuration": 30 
+      }
+    },
+    "regions": ["iad1"], 
+    "public": true, 
+    "cleanUrls": true, 
+    "trailingSlash": false
+}
