@@ -16,14 +16,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="flex flex-col">
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
+        <div className="flex flex-col flex-grow">
           <nav className="bg-blue-600 p-4 text-white">
             <div className="container mx-auto">
               <h1 className="text-2xl font-bold">Personal Finance Visualizer</h1>
             </div>
           </nav>
-          <main className="container mx-auto p-4">{children}</main>
+          <main className="container mx-auto p-4 flex-grow">{children}</main>
           <footer className="bg-gray-800 p-4 text-white text-center">
             <p>© 2025 Personal Finance Visualizer. All rights reserved.</p>
           </footer>

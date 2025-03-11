@@ -1,11 +1,12 @@
-import { Schema, model, models } from 'mongoose';
+import mongoose from 'mongoose';
 
-const transactionSchema = new Schema({
+const transactionSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
-  date: { type: Date, required: true, default: Date.now },
+  date: { type: Date, required: true },
   description: { type: String, required: true },
+  category: { type: String, required: true, enum: ['Food', 'Transport', 'Utilities', 'Entertainment', 'Rent', 'Other'] }, // Predefined categories
 });
 
-const Transaction = models.Transaction || model('Transaction', transactionSchema);
+const Transaction = mongoose.models.Transaction || mongoose.model('Transaction', transactionSchema);
 
 export default Transaction;

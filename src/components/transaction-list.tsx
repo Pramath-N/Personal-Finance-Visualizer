@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Transaction } from '@/types/transaction';
 
+// Predefined categories
+const categories = ['Food', 'Transport', 'Utilities', 'Entertainment', 'Rent', 'Other'];
+
 export default function TransactionList() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isUpdatingTransaction, setIsUpdatingTransaction] = useState<Transaction | null>(null);
@@ -81,6 +84,25 @@ export default function TransactionList() {
                 />
               </div>
               <div className="flex items-center">
+                <label className="font-bold mr-2">Category:</label>
+                <select
+                  value={isUpdatingTransaction.category}
+                  onChange={(e) =>
+                    setIsUpdatingTransaction({
+                      ...isUpdatingTransaction,
+                      category: e.target.value,
+                    })
+                  }
+                  className="border p-1 rounded"
+                >
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex items-center">
                 <label className="font-bold mr-2">Description:</label>
                 <input
                   type="text"
@@ -117,6 +139,9 @@ export default function TransactionList() {
               </span>
               <span className="flex">
                 <p className="font-bold mr-20">Date:</p> {new Date(transaction.date).toLocaleDateString()}
+              </span>
+              <span className="flex">
+                <p className="font-bold mr-6">Category:</p> {transaction.category}
               </span>
               <span className="flex">
                 <p className="font-bold mr-6">Description:</p> {transaction.description}

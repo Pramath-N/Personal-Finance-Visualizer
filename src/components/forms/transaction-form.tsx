@@ -1,54 +1,69 @@
-'use client';
-
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
-type OnSubmitType = (data: { amount: number; date: string; description: string }) => void;
+const categories = ['Food', 'Transport', 'Utilities', 'Entertainment', 'Rent', 'Other'];
 
+export default function TransactionForm({ onSubmit, isSubmitting }: {onSubmit: (data: any) => void, isSubmitting: boolean}) {
+  const [formData, setFormData] = useState({
+    amount: '',
+    date: '',
+    description: '',
+    category: categories[0], // Default category
+  });
 
-
-export default function TransactionForm({onSubmit} : { onSubmit: OnSubmitType }) {
-  const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
-  const [description, setDescription] = useState('');
-
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ amount: parseFloat(amount), date, description });
+    onSubmit({
+      amount: parseFloat(formData.amount),
+      date: formData.date,
+      description: formData.description,
+      category: formData.category,
+    });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label>Amount</Label>
-        <Input
-          type="number"
-          value={amount}
-          onChange={(event) => setAmount(event.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <Label>Date</Label>
-        <Input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <Label>Description</Label>
-        <Input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-      </div>
-      <Button type="submit">Save</Button>
+      <input
+        type="number"
+        placeholder="Amount"
+        value={formData.amount}
+        onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+        className="border p-2 rounded w-full"
+        required
+      />
+      <input
+        type="date"
+        value={formData.date}
+        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+        className="border p-2 rounded w-full"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Description"
+        value={formData.description}
+        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+        className="border p-2 rounded w-full"
+        required
+      />
+      <select
+        value={formData.category}
+        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+        defaultValue={categories[categories.length - 1]}
+        className="border p-2 rounded w-full"
+      >
+        {categories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="bg-blue-600 text-white p-2 rounded w-full"
+      >
+        {isSubmitting ? 'Submitting...' : 'Add Transaction'}
+      </button>
     </form>
   );
 }
