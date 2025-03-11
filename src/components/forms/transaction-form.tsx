@@ -2,7 +2,14 @@ import { useState } from 'react';
 
 const categories = ['Food', 'Transport', 'Utilities', 'Entertainment', 'Rent', 'Other'];
 
-export default function TransactionForm({ onSubmit, isSubmitting }: {onSubmit: (data: any) => void, isSubmitting: boolean}) {
+interface TransactionData {
+  amount: number;
+  date: string;
+  description: string;
+  category: string;
+}
+
+export default function TransactionForm({ onSubmit, isSubmitting }: {onSubmit: (data: TransactionData) => void, isSubmitting: boolean}) {
   const [formData, setFormData] = useState({
     amount: '',
     date: '',
