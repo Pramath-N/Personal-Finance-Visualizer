@@ -20,6 +20,12 @@ export default function Home() {
         >
           Go to Dashboard
         </Link>
+        <Link
+          href="/budget"
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Go to Budget Analysis
+        </Link>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import TransactionList from '@/components/transaction-list';
 export default function TransactionsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (data: { amount: number; date: string; description: string }) => {
+  const handleSubmit = async (data: { amount: number; date: string; description: string; category: string }) => {
     setIsSubmitting(true); // Start submitting
     try {
       const response = await fetch('/api/transactions', { // Correct URL
